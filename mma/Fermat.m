@@ -46,18 +46,31 @@ FermatInverse[mat_List] := Module[{res},
 res];
 
 FermatDet[mat_List] := Module[{res},
-	FermatEval["&U"];	(* workaround *)
-	FermatEval["Array tmpmat["<>ToString[Length[mat],InputForm]<>","<>ToString[Length[First[mat]],InputForm]<>"]"];
-	FermatEval["[tmpmat]:="<>StringReplace[ToString[Flatten[Transpose[mat]],InputForm],{"{"->"[[","}"->"]]"}]];
-	FermatEval["&U"];	(* workaround *)
+    FermatEval["&U"];	(* workaround *)
+    FermatEval["Array tmpmat["<>ToString[Length[mat],InputForm]<>","<>ToString[Length[First[mat]],InputForm]<>"]"];
+    FermatEval["[tmpmat]:="<>StringReplace[ToString[Flatten[Transpose[mat]],InputForm],{"{"->"[[","}"->"]]"}]];
+    FermatEval["&U"];	(* workaround *)
 
-    	res = FermatEval["Det[tmpmat]"];
+    res = FermatEval["Det[tmpmat]"];
 
-    	FermatEval["@[tmpmat]"];
+    FermatEval["@[tmpmat]"];
 
-    	res = ToExpression[res];
+    res = ToExpression[res];
 res];
-    
+
+FermatRank[mat_List] := Module[{res},
+    FermatEval["&U"];	(* workaround *)
+    FermatEval["Array tmpmat["<>ToString[Length[mat],InputForm]<>","<>ToString[Length[First[mat]],InputForm]<>"]"];
+    FermatEval["[tmpmat]:="<>StringReplace[ToString[Flatten[Transpose[mat]],InputForm],{"{"->"[[","}"->"]]"}]];
+    FermatEval["&U"];	(* workaround *)
+
+    res = FermatEval["Normalize([tmpmat])"];
+
+    FermatEval["@[tmpmat]"];
+
+    res = ToExpression[res];
+res];
+
 EndPackage[];
 
 
